@@ -7,6 +7,7 @@ Zshのフレームワーク[Oh My Zsh](https://github.com/ohmyzsh/ohmyzsh)をイ
 ```
 $ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 ```
+<img width="655" alt="スクリーンショット 2022-08-25 17 32 24" src="https://user-images.githubusercontent.com/64122953/186616180-751a62a0-d39a-45f0-ad9c-981bbd10bce9.png">
 
 もし、悟りを開いてアンインストールしたかったらこれだ！
 ```
@@ -22,3 +23,23 @@ Are you sure you want to remove Oh My Zsh? [y/N] y
 brew install pure
 ```
 
+## 04 補完やシンタックスハイライトを有効にするためプラグインをインストールせよ
+```
+$ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+$ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+$ git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
+$ git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
+```
+
+## 05. .zshrcに設定を反映させろ
+インストールしたPureとプラグインを反映させるために以下の設定を.zshrcに書き込め！
+```
+# Pureテーマ
+ZSH_THEME="refined"
+# プラグインを有効化
+plugins=(zsh-autosuggestions zsh-syntax-highlighting zsh-completions history-substring-search)
+autoload -U compinit && compinit
+```
+ターミナルを再起動すれば反映される！
+
+以上だ!!
