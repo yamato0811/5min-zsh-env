@@ -1,0 +1,1 @@
+# 5min-zsh-env
