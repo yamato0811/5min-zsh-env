@@ -55,9 +55,10 @@ curl -O https://raw.githubusercontent.com/Arc0re/Iceberg-iTerm2/master/iceberg.i
 <img width="600" alt="スクリーンショット 2022-08-25 17 53 02" src="https://user-images.githubusercontent.com/64122953/186620783-ba9683b8-cb9c-4379-b537-24330cc8b8e4.png">
 
 ## 04. .zshrcに設定を反映させろ
-インストールしたPureとプラグインを反映させるために以下の設定を、.zpreztorcに書き込め！
+インストールしたPureとプラグインを反映させるために以下の設定を、`~/.zpreztorc`に書き込め！
 
 ### pureテーマに変更
+`~/.zpreztorc`
 ```
 #
 # Prompt
@@ -71,6 +72,8 @@ zstyle ':prezto:module:prompt' theme 'pure'
 ```
 
 ### 補完とシンタックスハイライトのモジュールを有効
+`~/.zpreztorc` 
+
 追加するのはpromptの上だ！
 ```
 # Set the Prezto modules to load (browse modules).
