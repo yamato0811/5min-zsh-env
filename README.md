@@ -27,8 +27,15 @@ for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
   ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
 done
 ```
-これで、再起動すればガラッと変わったプロンプトが見られる！
+これで、再起動すればガラッと変わったプロンプトが見られる！  
+
 <img width="752" alt="スクリーンショット 2022-10-26 15 25 57" src="https://user-images.githubusercontent.com/64122953/197950731-a28fc48d-1f3b-467c-83a6-4a76e767e7eb.png">
+
+最後に元々のzsh設定の引継げ！
+```
+cat ~/bkp/.zprofile >> .zprofile
+cat ~/bkp/.zshrc >> .zshrc
+```
 
 
 もし、悟りを開いてアンインストールしたかったらこれだ！
