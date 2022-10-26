@@ -4,29 +4,39 @@
 ## 01. iTerm2をインストールせよ
 https://www.iterm2.com/
 
-## 02. Oh My Zshのインストールせよ
-Zshのフレームワーク[Oh My Zsh](https://github.com/ohmyzsh/ohmyzsh)をインストールせよ 
+## 02. Preztoをインストールせよ
+### !注意!
+もし、 .zshrc、 .zprofileがある場合は、別フォルダに退避せよ！
+Preztoのインストール時に、.zshrc, .zprofileがあると、Preztoの設定ファイルがうまく引き継げない場合があるぞ！
+```
+mkdir ~/bkp
+mv .zshrc .zprofile ~/bkp
+```
 
+### インストール
+Zshのフレームワーク[Prezto](https://github.com/sorin-ionescu/prezto)をインストールせよ 
+
+まず、リポジトリーをクローンせよ
 ```
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 ```
-<img width="655" alt="スクリーンショット 2022-08-25 17 32 24" src="https://user-images.githubusercontent.com/64122953/186616180-751a62a0-d39a-45f0-ad9c-981bbd10bce9.png">
+次に設定ファイルの作成をせよ(全コマンドをコピーして貼り付ければOK)
+```
+setopt EXTENDED_GLOB
+for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+done
+```
+これで、再起動すればガラッと変わったプロンプトが見られる！
+<img width="752" alt="スクリーンショット 2022-10-26 15 25 57" src="https://user-images.githubusercontent.com/64122953/197950731-a28fc48d-1f3b-467c-83a6-4a76e767e7eb.png">
+
 
 もし、悟りを開いてアンインストールしたかったらこれだ！
 ```
-uninstall_oh_my_zsh
-Are you sure you want to remove Oh My Zsh? [y/N] y
+rm -rf ~/.zprezto ~/.zlogin ~/.zlogout ~/.zpreztorc ~/.zprofile ~/.zshenv ~/.zshrc
 ```
 
-## 03. Pureをインストールせよ
-[Pure](https://github.com/sindresorhus/pure)はシンプルなプロンプトだ。  
-ごちゃごちゃした見た目のプロンプトを使っているやつは漢じゃねぇ！シンプルこそ正義だ！
-
-```
-brew install pure
-```
-
-## 04. テーマをIcebergに変えろ
+## 03. テーマをIcebergに変えろ
 初期設定だとターミナルの色がダサいから[Iceberg](https://github.com/Arc0re/Iceberg-iTerm2)に変えろ
 
 ファイルダウンロード
@@ -37,24 +47,43 @@ curl -O https://raw.githubusercontent.com/Arc0re/Iceberg-iTerm2/master/iceberg.i
 
 <img width="600" alt="スクリーンショット 2022-08-25 17 53 02" src="https://user-images.githubusercontent.com/64122953/186620783-ba9683b8-cb9c-4379-b537-24330cc8b8e4.png">
 
+## 04. .zshrcに設定を反映させろ
+インストールしたPureとプラグインを反映させるために以下の設定を、.zpreztorcに書き込め！
 
-## 05. 補完やシンタックスハイライトを有効にするためプラグインをインストールせよ
+### pureテーマに変更
 ```
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
-git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
+#
+# Prompt
+#
+
+# Set the prompt theme to load.
+# Setting it to 'random' loads a random theme.
+# Auto set to 'off' on dumb terminals.
+# 変更箇所
+zstyle ':prezto:module:prompt' theme 'pure'
 ```
 
-## 06. .zshrcに設定を反映させろ
-インストールしたPureとプラグインを反映させるために以下の設定を.zshrcに書き込め！
+### 補完とシンタックスハイライトのモジュールを有効
+追加するのはpromptの上だ！
 ```
-# Pureテーマ
-ZSH_THEME="refined"
-# プラグインを有効化
-plugins=(zsh-autosuggestions zsh-syntax-highlighting zsh-completions history-substring-search)
-autoload -U compinit && compinit
+# Set the Prezto modules to load (browse modules).
+# The order matters.
+zstyle ':prezto:load' pmodule \
+  'environment' \
+  'terminal' \
+  'editor' \
+  'history' \
+  'directory' \
+  'spectrum' \
+  'utility' \
+  'completion' \
+  　# 追記箇所 #
+  'syntax-highlighting' \
+  'autosuggestions' \
+　  ##########
+  'prompt' \
 ```
+
 ターミナルを再起動すれば反映される！
 
 以上だ!!
